@@ -5,10 +5,12 @@ module Lib
     , grid
     , languages
     , findWord
+    , findWords
     , findWordInLine
     ) where
 
 import Data.List (isInfixOf)
+import Data.Maybe (catMaybes)
 
 type Grid = [String]
 -- helps the human reader of the sourcecode to understand
@@ -20,11 +22,17 @@ outputGrid grid = putStrLn (formatGrid grid)
 formatGrid :: Grid -> String
 formatGrid = unlines
 
-findWord :: Grid -> String -> Bool
+findWord :: Grid -> String -> Maybe String
 -- findWord grid word = or $ map (findWordInLine word) grid
 findWord grid word =
     let grids = grid ++ (map reverse grid)
-    in or $ map (findWordInLine word) grids
+        found = or $ map (findWordInLine word) grids
+    in if found then Just word else Nothing
+    
+findWords :: Grid -> [String] -> [String]    
+findWords grid words = 
+    let foundWords = map (findWord grid) words
+    in catMaybes foundWords
 
 findWordInLine :: String -> String -> Bool
 findWordInLine = isInfixOf
