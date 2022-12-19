@@ -4,6 +4,7 @@ module Lib
     , someString
     , grid
     , languages
+    , findWord
     , findWordInLine
     ) where
 
@@ -20,13 +21,16 @@ formatGrid :: Grid -> String
 formatGrid = unlines
 
 findWord :: Grid -> String -> Bool
-findWord grid word = or $ map (findWordInLine word) grid
+-- findWord grid word = or $ map (findWordInLine word) grid
+findWord grid word =
+    let grids = grid ++ (map reverse grid)
+    in or $ map (findWordInLine word) grids
 
 findWordInLine :: String -> String -> Bool
 findWordInLine = isInfixOf
 -- we could use isInfixOf, but creating the alias
 -- documents our intent better.
---findWordInLine word line = word `isInfixOf` line
+-- findWordInLine word line = word `isInfixOf` line
 
 someString :: String
 someString = "someString"
