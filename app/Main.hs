@@ -1,7 +1,7 @@
 module Main (main) where
 
 import Lib
-import Data
+import Conf
 
 main :: IO ()
 main = outputGrid grid

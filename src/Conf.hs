@@ -1,4 +1,4 @@
-module Data
+module Conf
     ( grid
     , languages
     ) where

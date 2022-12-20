@@ -10,9 +10,11 @@ module Lib
 
 import Data.List (isInfixOf, transpose)
 import Data.Maybe (catMaybes)
-import Data
+import Conf
 
-
+type Grid = [String]
+-- helps the human reader of the sourcecode to understand
+-- what's going on
 
 outputGrid :: Grid -> IO ()
 outputGrid grid = putStrLn (formatGrid grid)

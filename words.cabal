@@ -9,7 +9,7 @@ version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/words#readme>
 homepage:       https://github.com/github/jeanbondy#readme
 bug-reports:    https://github.com/github/jeanbondy/issues
-author:         Jeane
+author:         Jean
 maintainer:     jean@example.com
 copyright:      2022 Jean
 license:        BSD3
@@ -25,7 +25,7 @@ source-repository head
 
 library
   exposed-modules:
-      Data
+      Conf
       Lib
   other-modules:
       Paths_words
