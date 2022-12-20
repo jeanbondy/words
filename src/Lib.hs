@@ -7,6 +7,7 @@ module Lib
     , findWord
     , findWords
     , findWordInLine
+    , skew
     ) where
 
 import Data.List (isInfixOf, transpose)
@@ -22,13 +23,21 @@ outputGrid grid = putStrLn (formatGrid grid)
 formatGrid :: Grid -> String
 formatGrid = unlines
 
+skew :: Grid -> Grid
+skew [] = []
+--skew (x:xs) = x : skew (map (prepend "_") xs)
+--    where prepend a b = a ++ b
+skew (l:ls) = l : skew (map indent ls)
+    where indent line = "_" ++ line
+
 findWord :: Grid -> String -> Maybe String
 -- findWord grid word = or $ map (findWordInLine word) grid
 findWord grid word =
     let horizontal = grid
         vertical = transpose grid
-        reversed = map reverse (horizontal ++ vertical)
-        grids = horizontal ++ vertical ++ reversed
+        diagonal = transpose (skew grid)
+        reversed = map reverse (horizontal ++ vertical ++ diagonal)
+        grids = horizontal ++ vertical ++ diagonal ++ reversed 
         found = or $ map (findWordInLine word) grids
     in if found then Just word else Nothing
     
