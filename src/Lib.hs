@@ -15,7 +15,7 @@ import Conf
 
 data Cell = Cell (Integer, Integer) Char deriving (Eq, Ord, Show)
 
-type Grid = [String]
+type Grid a = [[a]]
 -- helps the human reader of the sourcecode to understand
 -- what's going on
 
@@ -29,23 +29,23 @@ coordsGrid =
     
 gridWithCoords grid = zipOverGridWith Cell coordsGrid grid
 
-outputGrid :: Grid -> IO ()
+outputGrid :: Grid Char -> IO ()
 outputGrid grid = putStrLn (formatGrid grid)
 
-formatGrid :: Grid -> String
+formatGrid :: Grid Char -> String
 formatGrid = unlines
 
-skew :: Grid -> Grid
+skew :: Grid Char -> Grid Char
 skew [] = []
 --skew (x:xs) = x : skew (map (prepend "_") xs)
 --    where prepend a b = a ++ b
 skew (l:ls) = l : skew (map indent ls)
     where indent line = "_" ++ line
     
-diagonalize :: Grid -> Grid
+diagonalize :: Grid Char -> Grid Char
 diagonalize = transpose . skew
 
-findWord :: Grid -> String -> Maybe String
+findWord :: Grid Char -> String -> Maybe String
 -- findWord grid word = or $ map (findWordInLine word) grid
 findWord grid word =
     let horizontal = grid
@@ -60,7 +60,7 @@ findWord grid word =
         found = or $ map (findWordInLine word) grids
     in if found then Just word else Nothing
     
-findWords :: Grid -> [String] -> [String]    
+findWords :: Grid Char -> [String] -> [String]    
 findWords grid words = 
     let foundWords = map (findWord grid) words
     in catMaybes foundWords
