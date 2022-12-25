@@ -7,6 +7,7 @@ module Lib
     , findWordInLine
     , skew
     , coordsGrid
+    , zipOverGrid
     ) where
 
 import Data.List (isInfixOf, transpose)
@@ -19,6 +20,7 @@ type Grid a = [[a]]
 -- helps the human reader of the sourcecode to understand
 -- what's going on
 
+zipOverGrid :: Grid a -> Grid b -> Grid (a,b)
 zipOverGrid = zipWith zip
 zipOverGridWith = zipWith . zipWith
 
