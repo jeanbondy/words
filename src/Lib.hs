@@ -6,15 +6,28 @@ module Lib
     , findWords
     , findWordInLine
     , skew
+    , coordsGrid
     ) where
 
 import Data.List (isInfixOf, transpose)
 import Data.Maybe (catMaybes)
 import Conf
 
+data Cell = Cell (Integer, Integer) Char deriving (Eq, Ord, Show)
+
 type Grid = [String]
 -- helps the human reader of the sourcecode to understand
 -- what's going on
+
+zipOverGrid = zipWith zip
+zipOverGridWith = zipWith . zipWith
+
+coordsGrid =
+    let rows = map repeat [0..]
+        cols = repeat [0..]
+    in zipOverGrid rows cols
+    
+gridWithCoords grid = zipOverGridWith Cell coordsGrid grid
 
 outputGrid :: Grid -> IO ()
 outputGrid grid = putStrLn (formatGrid grid)
