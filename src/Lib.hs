@@ -8,6 +8,7 @@ module Lib
     , skew
     , coordsGrid
     , zipOverGrid
+    , zipOverGridWith
     ) where
 
 import Data.List (isInfixOf, transpose)
@@ -22,6 +23,8 @@ type Grid a = [[a]]
 
 zipOverGrid :: Grid a -> Grid b -> Grid (a,b)
 zipOverGrid = zipWith zip
+
+zipOverGridWith :: (a -> b -> c) -> Grid a -> Grid b -> Grid c
 zipOverGridWith = zipWith . zipWith
 
 coordsGrid =
