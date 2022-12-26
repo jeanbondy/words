@@ -9,6 +9,7 @@ module Lib
     , coordsGrid
     , zipOverGrid
     , zipOverGridWith
+    , gridWithCoords
     ) where
 
 import Data.List (isInfixOf, transpose)
@@ -27,18 +28,34 @@ zipOverGrid = zipWith zip
 zipOverGridWith :: (a -> b -> c) -> Grid a -> Grid b -> Grid c
 zipOverGridWith = zipWith . zipWith
 
+coordsGrid :: Grid (Integer, Integer)
 coordsGrid =
     let rows = map repeat [0..]
         cols = repeat [0..]
     in zipOverGrid rows cols
-    
+
+gridWithCoords :: Grid Char -> Grid Cell    
 gridWithCoords grid = zipOverGridWith Cell coordsGrid grid
 
-outputGrid :: Grid Char -> IO ()
+outputGrid :: Grid Cell -> IO ()
 outputGrid grid = putStrLn (formatGrid grid)
 
-formatGrid :: Grid Char -> String
-formatGrid = unlines
+
+formatGrid :: Grid Cell -> String
+formatGrid grid = unlines ( (map . map) cell2char grid )
+-- I don't understand why the proposed solution doesn't work:
+-- Couldn't match type: [Char]
+ --                    with: Grid Cell -> String
+--      Expected: Grid Cell -> String
+--        Actual: String
+--    • Possible cause: ‘unlines’ is applied to too many arguments
+--      In the expression: unlines chargrid
+--formatGrid =
+--    let charGrid = (map . map) cell2char grid
+--    in unlines charGrid
+
+cell2char :: Cell -> Char
+cell2char (Cell _ c) = c
 
 skew :: Grid Char -> Grid Char
 skew [] = []
