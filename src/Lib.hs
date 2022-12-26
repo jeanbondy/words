@@ -28,6 +28,10 @@ zipOverGrid = zipWith zip
 zipOverGridWith :: (a -> b -> c) -> Grid a -> Grid b -> Grid c
 zipOverGridWith = zipWith . zipWith
 
+-- this doesn't work - no idea why
+mapOverGrid :: (a -> b) -> Grid a -> Grid b
+mapOverGrid = map . map
+
 coordsGrid :: Grid (Integer, Integer)
 coordsGrid =
     let rows = map repeat [0..]
@@ -42,6 +46,7 @@ outputGrid grid = putStrLn (formatGrid grid)
 
 
 formatGrid :: Grid Cell -> String
+-- formatGrid = unlines $ mapOverGrid cell2char $ grid
 formatGrid grid = unlines ( (map . map) cell2char grid )
 -- I don't understand why the proposed solution doesn't work:
 -- Couldn't match type: [Char]
